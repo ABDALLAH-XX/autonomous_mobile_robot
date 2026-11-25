@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<robot name="mon_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Paramètres à ajuster avec tes mesures -->
+  <xacro:property name="chassis_length" value="0.20"/>
+  <xacro:property name="chassis_width" value="0.14"/>
+  <xacro:property name="chassis_height" value="0.04"/>
+  <xacro:property name="wheel_radius" value="0.033"/>
+  <xacro:property name="wheel_width" value="0.027"/>
+  <xacro:property name="wheel_separation" value="0.165"/>
+  <xacro:property name="chassis_offset_x" value="0.03"/>
+  <xacro:property name="caster_radius" value="0.012"/>
+  <xacro:property name="caster_x" value="0.10"/>
+
+  <material name="gris"><color rgba="0.6 0.6 0.6 1"/></material>
+  <material name="noir"><color rgba="0.1 0.1 0.1 1"/></material>
+  <material name="bleu"><color rgba="0.2 0.3 0.8 1"/></material>
+
+  <!-- Repère au sol, sous le milieu de l'essieu -->
+  <link name="base_footprint"/>
+
+  <!-- base_link : milieu de l'essieu, à hauteur du centre des roues -->
+  <link name="base_link">
+    <visual>
+      <origin xyz="${chassis_offset_x} 0 0"/>
+      <geometry><box size="${chassis_length} ${chassis_width} ${chassis_height}"/></geometry>
+      <material name="bleu"/>
+    </visual>
+    <collision>
+      <origin xyz="${chassis_offset_x} 0 0"/>
+      <geometry><box size="${chassis_length} ${chassis_width} ${chassis_height}"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="${chassis_offset_x} 0 0"/>
+      <mass value="0.8"/>
+      <inertia ixx="0.003" ixy="0" ixz="0" iyy="0.004" iyz="0" izz="0.005"/>
+    </inertial>
+  </link>
+
+  <joint name="base_footprint_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 ${wheel_radius}"/>
+  </joint>
+
+  <!-- Roues motrices -->
+  <xacro:macro name="wheel" params="name side">
+    <link name="${name}_wheel">
+      <visual>
+        <origin rpy="1.5708 0 0"/>
+        <geometry><cylinder radius="${wheel_radius}" length="${wheel_width}"/></geometry>
+        <material name="noir"/>
+      </visual>
+      <collision>
+        <origin rpy="1.5708 0 0"/>
+        <geometry><cylinder radius="${wheel_radius}" length="${wheel_width}"/></geometry>
+      </collision>
+      <inertial>
+        <mass value="0.05"/>
+        <inertia ixx="0.00002" ixy="0" ixz="0" iyy="0.00003" iyz="0" izz="0.00002"/>
+      </inertial>
+    </link>
+    <joint name="${name}_wheel_joint" type="continuous">
+      <parent link="base_link"/>
+      <child link="${name}_wheel"/>
+      <origin xyz="0 ${side * wheel_separation / 2} 0"/>
+      <axis xyz="0 1 0"/>
+    </joint>
+  </xacro:macro>
+
+  <xacro:wheel name="left" side="1"/>
+  <xacro:wheel name="right" side="-1"/>
+
+  <!-- Roue universelle avant -->
+  <link name="caster_wheel">
+    <visual>
+      <geometry><sphere radius="${caster_radius}"/></geometry>
+      <material name="gris"/>
+    </visual>
+    <collision>
+      <geometry><sphere radius="${caster_radius}"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="0.02"/>
+      <inertia ixx="0.000001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.000001"/>
+    </inertial>
+  </link>
+  <joint name="caster_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="caster_wheel"/>
+    <origin xyz="${caster_x} 0 ${caster_radius - wheel_radius}"/>
+  </joint>
+
+  <!-- Emplacements provisoires du LiDAR et de l'IMU -->
+  <link name="laser_frame"/>
+  <joint name="laser_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="laser_frame"/>
+    <origin xyz="0.05 0 0.08"/>
+  </joint>
+
+  <link name="imu_link"/>
+  <joint name="imu_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+    <origin xyz="0 0 0.03"/>
+  </joint>
+
+</robot>

@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/abdallah/Bureau/autonomous_mobile_robot/build/robot_description/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
