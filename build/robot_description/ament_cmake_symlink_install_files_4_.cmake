@@ -1,1 +1,0 @@
-ament_cmake_symlink_install_files("/home/abdallah/Bureau/autonomous_mobile_robot/src/robot_description" FILES "/opt/ros/lyrical/share/ament_cmake_core/cmake/environment_hooks/environment/path.sh" "DESTINATION" "share/robot_description/environment")

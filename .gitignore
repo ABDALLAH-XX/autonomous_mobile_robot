@@ -1,4 +1,5 @@
-benchmarks
-docs
-src/build
-src/log
+build/
+install/
+log/
+__pycache__/
+*.pyc

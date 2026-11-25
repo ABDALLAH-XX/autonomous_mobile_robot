@@ -1,1 +1,0 @@
-ament_cmake_symlink_install_files("/home/abdallah/Bureau/autonomous_mobile_robot/src/robot_description" FILES "/home/abdallah/Bureau/autonomous_mobile_robot/src/robot_description/package.xml" "DESTINATION" "share/robot_description")

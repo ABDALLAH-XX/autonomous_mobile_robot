@@ -1,1 +1,0 @@
-ament_cmake_symlink_install_files("/home/abdallah/Bureau/autonomous_mobile_robot/src/robot_description" FILES "/home/abdallah/Bureau/autonomous_mobile_robot/build/robot_description/ament_cmake_environment_hooks/ament_prefix_path.dsv" "DESTINATION" "share/robot_description/environment")

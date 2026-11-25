@@ -1,1 +1,0 @@
-/home/abdallah/Bureau/autonomous_mobile_robot/build/robot_description/ament_cmake_core/robot_descriptionConfig.cmake

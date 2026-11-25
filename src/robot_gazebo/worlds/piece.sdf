@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <world name="piece">
+    <physics name="pas" type="ignored">
+      <max_step_size>0.004</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"/>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"/>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <plugin filename="gz-sim-imu-system" name="gz::sim::systems::Imu"/>
+
+    <light type="directional" name="soleil">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.9 0.9 0.9 1</diffuse>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <model name="sol">
+      <static>true</static>
+      <link name="link">
+        <collision name="c"><geometry><plane><normal>0 0 1</normal><size>20 20</size></plane></geometry></collision>
+        <visual name="v">
+          <geometry><plane><normal>0 0 1</normal><size>20 20</size></plane></geometry>
+          <material><ambient>0.8 0.8 0.8 1</ambient><diffuse>0.8 0.8 0.8 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Murs (pièce de 6 x 6 m) -->
+    <model name="mur_nord"><static>true</static><pose>0 3 0.25 0 0 0</pose><link name="l">
+      <collision name="c"><geometry><box><size>6 0.1 0.5</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>6 0.1 0.5</size></box></geometry></visual></link></model>
+    <model name="mur_sud"><static>true</static><pose>0 -3 0.25 0 0 0</pose><link name="l">
+      <collision name="c"><geometry><box><size>6 0.1 0.5</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>6 0.1 0.5</size></box></geometry></visual></link></model>
+    <model name="mur_est"><static>true</static><pose>3 0 0.25 0 0 0</pose><link name="l">
+      <collision name="c"><geometry><box><size>0.1 6 0.5</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>0.1 6 0.5</size></box></geometry></visual></link></model>
+    <model name="mur_ouest"><static>true</static><pose>-3 0 0.25 0 0 0</pose><link name="l">
+      <collision name="c"><geometry><box><size>0.1 6 0.5</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>0.1 6 0.5</size></box></geometry></visual></link></model>
+
+    <!-- Obstacles -->
+    <model name="boite_1"><static>true</static><pose>1 1 0.25 0 0 0.3</pose><link name="l">
+      <collision name="c"><geometry><box><size>0.5 0.5 0.5</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>0.5 0.5 0.5</size></box></geometry></visual></link></model>
+    <model name="boite_2"><static>true</static><pose>-1.2 -0.8 0.25 0 0 0</pose><link name="l">
+      <collision name="c"><geometry><box><size>0.8 0.3 0.5</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>0.8 0.3 0.5</size></box></geometry></visual></link></model>
+  </world>
+</sdf>
